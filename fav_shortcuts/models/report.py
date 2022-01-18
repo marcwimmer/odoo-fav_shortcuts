@@ -5,10 +5,10 @@ class Report(models.Model):
 
     test_url = fields.Char(compute="_get_test_url")
 
+    @api.one
     def _get_test_url(self):
-        for self in self:
-            try:
-                id = self.env[self.model].search([], limit=1, order='id desc').id
-            except Exception:
-                id = 0
-            self.test_url = '/report/html/{}/{}'.format(self.report_name, id)
+        try:
+            id = self.env[self.model].search([], limit=1, order='id desc').id
+        except Exception:
+            id = 0
+        self.test_url = '/report/html/{}/{}'.format(self.report_name, id)
